@@ -1,2 +1,4 @@
 # digitClassifier
- 
+This is a follow up to my previous project, if you create and train a NN with the default configuration from that project, then import the generated binary file into the folder "neuralData", you can then execute this program through the terminal. You can then draw a digit on the window and once you press enter, the digit the NN thinks it is will show up in the terminal. Keep in mind the NN has only 42 neurons, so dont expect it to ace on everything you draw, but it should be pretty accurate.
+
+The way this works is by using X11 to render an array of pixels, X11 also provides a way to keep track of the mouse and keyboard so I simply made it so that if the mouse is down, it draws a circle of a given radius around the mouse position(and fills it ofc). Then once you press enter it calls a function on the header file that reduces the resolution of the pixel array by taking the average of a block, runs the neural data on it, and then returns the digit the NN predicted.
