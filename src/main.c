@@ -11,7 +11,7 @@
 #define WIDTH 640
 #define HEIGHT 640
 
-#define drawRadius 32
+#define drawRadius 28
 
 void drawCircle(int* pixArr, int radius, int xCenter, int yCenter, int pixArrSizeX, int pixArraySizeY){
     int cyD = radius;

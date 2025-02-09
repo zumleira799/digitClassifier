@@ -42,7 +42,8 @@ int predictNumber(int* RGBPixelArr, int xSize, int ySize){
                 RGBPixelArr[i*xSize + k] = 0x000000;
                 continue;
             }
-            RGBPixelArr[i*xSize + k] = (int)(preProcessedI[i*28 + k]*(float)(0xffffff));
+            int r = (int)(0xff*preProcessedI[i*28 + k]);
+            RGBPixelArr[i*xSize + k] = (r|r<<8|r<<16);
         }
     }
 
