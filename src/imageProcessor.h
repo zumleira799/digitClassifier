@@ -51,50 +51,50 @@ int predictNumber(int* RGBPixelArr, int xSize, int ySize){
 
     float* NNPointer = NNdata;
 
-    float curP[16];
-    float tempP[16];
-    for(int i = 0; i < 16; i++){
+    float curP[128];
+    float tempP[128];
+    for(int i = 0; i < 128; i++){
         curP[i] = 0;
         tempP[i] = 0;
     }
 
     for(int i = 0; i < 784; i++){
-        for(int k = 0; k < 16; k++){
-            curP[k] += preProcessedI[i]*NNPointer[i*16 + k];
+        for(int k = 0; k < 128; k++){
+            curP[k] += preProcessedI[i]*NNPointer[i*128 + k];
         }
     }
-    NNPointer += 784*16;
+    NNPointer += 784*128;
 
-    for(int i = 0; i < 16; i++){
+    for(int i = 0; i < 128; i++){
         curP[i] += NNPointer[i];
         if(curP[i] <= 0){
             curP[i] *= ReLUalpha;
         }
     }
-    NNPointer += 16;
+    NNPointer += 128;
 
-    for(int i = 0; i < 16; i++){
-        for(int k = 0; k < 16; k++){
-            tempP[k] += curP[i]*NNPointer[i*16 + k];
+    for(int i = 0; i < 128; i++){
+        for(int k = 0; k < 64; k++){
+            tempP[k] += curP[i]*NNPointer[i*64 + k];
         }
     }
-    NNPointer += 16*16;
+    NNPointer += 128*64;
 
-    for(int i = 0; i < 16; i++){
+    for(int i = 0; i < 64; i++){
         curP[i] = 0;
         tempP[i] += NNPointer[i];
         if(tempP[i] <= 0){
             tempP[i] *= ReLUalpha;
         }
     }
-    NNPointer += 16;
+    NNPointer += 64;
 
-    for(int i = 0; i < 16; i++){
+    for(int i = 0; i < 64; i++){
         for(int k = 0; k < 10; k++){
             curP[k] += tempP[i]*NNPointer[i*10 + k];
         }
     }
-    NNPointer += 16*10;
+    NNPointer += 64*10;
 
     float max = -999999999.0;
     for(int i = 0; i < 10; i++){
@@ -123,7 +123,7 @@ int predictNumber(int* RGBPixelArr, int xSize, int ySize){
     }
 
     free(preProcessedI);
-    munmap(NNdata, 13002*sizeof(float));
+    munmap(NNdata, 109386*sizeof(float));
 
     return curM;
 }
